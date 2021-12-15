@@ -190,6 +190,25 @@ func (c *Client) processResponseXml(xmlStr string) (Params, error) {
 	}
 }
 
+// 转账
+func (c *Client) Transfer(params Params) (Params, error) {
+	var url string
+	if c.account.isSandbox {
+		url = SandboxUnifiedOrderUrl
+	} else {
+		url = UnifiedOrderUrl
+	}
+	//patch for mch_appid and mchid
+	params["mch_appid"] = c.account.appID
+	params["mchid"] = c.account.mchID
+
+	xmlStr, err := c.postWithCert(url, params)
+	if err != nil {
+		return nil, err
+	}
+	return c.processResponseXml(xmlStr)
+}
+
 // 统一下单
 func (c *Client) UnifiedOrder(params Params) (Params, error) {
 	var url string
