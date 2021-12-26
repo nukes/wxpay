@@ -194,9 +194,9 @@ func (c *Client) processResponseXml(xmlStr string) (Params, error) {
 func (c *Client) Transfer(params Params) (Params, error) {
 	var url string
 	if c.account.isSandbox {
-		url = SandboxUnifiedOrderUrl
+		url = SandboxTransferUrl
 	} else {
-		url = UnifiedOrderUrl
+		url = TransferUrl
 	}
 	//patch for mch_appid and mchid
 	params["mch_appid"] = c.account.appID
